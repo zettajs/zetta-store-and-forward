@@ -7,11 +7,10 @@ var StoreAndForward = require('../');
 
 // store data in circular buffer up to 1mb, to .restore path for all devices and streams. 
 // when a peer is not subscribed to stream
-var app = new StoreAndForward({ maxSizeKb: 1000,
-                                location: './.restore'
-                              });
+var app = new StoreAndForward({ peer: 'http://localhost:5000' });
 
 var z = zetta()
+  .name('test')
   .use(app)
   .use(LED)
   .use(Photocell)
@@ -19,7 +18,7 @@ var z = zetta()
 
 setTimeout(function(){
   z.link('http://localhost:5000')
-}, 30000)
+}, 5000)
 
 
 

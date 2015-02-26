@@ -5,10 +5,6 @@ var Storage = module.exports = function(location) {
   this._ring = new RingBuffer(this.size);
 };
 
-Storage.prototype.open = function(callback) {
-  callback();
-};
-
 Storage.prototype.push = function(event) {
   return this._ring.enq(event);
 };
@@ -19,5 +15,3 @@ Storage.prototype.shift = function() {
   }
   return this._ring.deq();
 };
-
-

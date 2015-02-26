@@ -1,10 +1,10 @@
-var Db = require('./db');
+var MemoryDb = require('./memory_db');
 
 var StoreAndForward = module.exports = function(options) {
-  options = options || {};
   var self = this;
+  options = options || {};
   this.compare = options.compare || this._compare;
-  this.db = new Db();
+  this.db = options.db || new MemoryDb();
   
   return function() {
     self.init.apply(self, arguments);

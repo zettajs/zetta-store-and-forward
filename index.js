@@ -40,7 +40,8 @@ StoreAndForward.prototype._init = function(server) {
     }
     
     self._connectedPeers.push(msg.peer.url);
-    self._onConnected();
+    // delay for a moment while pubsub is being connected to
+    setTimeout(self._onConnected.bind(self), 250);
   });
 
   server.pubsub.subscribe('_peer/disconnect', function(e, msg) {
@@ -62,7 +63,7 @@ StoreAndForward.prototype._init = function(server) {
 };
 
 StoreAndForward.prototype.isConnected = function() {
-  return this._connectedPeers > 0;
+  return this._connectedPeers.length > 0;
 };
 
 StoreAndForward.prototype._onConnected = function() {
@@ -77,10 +78,27 @@ StoreAndForward.prototype._onConnected = function() {
     if (event === null) {
       return;
     }
-    self._orig.call(self._server.pubsub, event.topic, event);
+
+    self._publishEvent(event.topic, event);
     setTimeout(send, self.delay);
   }
   send();
+};
+
+StoreAndForward.prototype._publishEvent = function(topic, event) {
+  var listeners = this._server.pubsub._listeners;
+  if (!listeners[topic]) {
+    return;
+  }
+  
+  listeners[topic].forEach(function(l) {
+    // dont send to local pubsub
+    if (typeof l.listener !== 'object') {
+      return;
+    }
+    
+    l.actual(event);
+  });
 };
 
 StoreAndForward.prototype._compare = function(topic) {

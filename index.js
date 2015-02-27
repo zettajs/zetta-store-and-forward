@@ -5,7 +5,7 @@ var StoreAndForward = module.exports = function(options) {
   var self = this;
   options = options || {};
 
-  this.peer = url.parse(options.peer).hostname || null;
+  this.peer = (options.peer) ? url.parse(options.peer).hostname : null;
   this.compare = options.compare || this._compare;
   this.db = options.db || new MemoryDb();  
   this.sendDelay = options.sendDelay || 25;

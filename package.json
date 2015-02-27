@@ -1,7 +1,7 @@
 {
   "name": "zetta-store-and-forward",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Buffer device data going to the cloud until a peer is connected or reconnects. This module is an app that plugs into [Zetta](http://zettajs.org) By default this module stores events in an in memory FIFO that starts to overwrite it's self after 100,000 events. However this can be swapped out using the `db` option.",
   "main": "index.js",
   "dependencies": {
     "ringbufferjs": "^0.0.1"
@@ -10,6 +10,20 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Adam Magaluk <AdamMagaluk@gmail.com>",
+  "license": "MIT",
+  "directories": {
+    "example": "example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zettajs/zetta-store-and-forward.git"
+  },
+  "keywords": [
+    "zetta"
+  ],
+  "bugs": {
+    "url": "https://github.com/zettajs/zetta-store-and-forward/issues"
+  },
+  "homepage": "https://github.com/zettajs/zetta-store-and-forward"
 }

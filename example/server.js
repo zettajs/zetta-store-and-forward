@@ -1,26 +1,17 @@
 var zetta = require('zetta');
 var LED = require('zetta-led-mock-driver');
 var Photocell = require('zetta-photocell-mock-driver');
-
 var StoreAndForward = require('../');
 
+// store last 100,000 events when disconnceted from localhost:5000
+var app = new StoreAndForward({ });
 
-// store data in circular buffer up to 1mb, to .restore path for all devices and streams. 
-// when a peer is not subscribed to stream
-var app = new StoreAndForward({ peer: 'http://localhost:5000' });
-
-var z = zetta()
-  .name('test')
+zetta()
+  .name('peer-1')
   .use(app)
   .use(LED)
-  .use(Photocell)
-  .listen()
-
-setTimeout(function(){
-  z.link('http://localhost:5000')
-}, 5000)
-
-
+  .link('http://localhost:2000')
+  .listen(1335);
 
 
 
